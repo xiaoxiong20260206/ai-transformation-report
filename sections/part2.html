@@ -1,0 +1,228 @@
+<!-- 章节5: 数据问答Agent可外采产品对比分析（含4个Tab） -->
+
+<section class="section-card" id="products">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-number">5</span>
+        <h2>📦 数据问答Agent可外采产品对比分析</h2>
+        <span class="toggle">▼</span>
+    </div>
+    <div class="section-content">
+        <div class="tabs">
+            <div class="tab active" data-tab="tab-comparison">产品对比表</div>
+            <div class="tab" data-tab="tab-aloudata">Aloudata深度分析</div>
+            <div class="tab" data-tab="tab-benchmark">优势能力借鉴</div>
+            <div class="tab" data-tab="tab-yonyou">用友分析</div>
+        </div>
+
+        <!-- Tab 1: 产品对比表 -->
+        <div id="tab-comparison" class="tab-content active">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>产品</th>
+                            <th>产品定位</th>
+                            <th>私有化</th>
+                            <th>金融语义</th>
+                            <th>准确性</th>
+                            <th>部署周期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>恒生WarrenQ</strong></td>
+                            <td>金融垂类大模型</td>
+                            <td><span class="status status-success">✓</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="status status-success">>96%</span></td>
+                            <td>2-4周</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>Aloudata Agent</strong></td>
+                            <td>NoETL智能体</td>
+                            <td><span class="status status-success">✓</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="status status-success">100%</span></td>
+                            <td>3-6周</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quick BI智能小Q</strong></td>
+                            <td>阿里云国产BI+AI</td>
+                            <td><span class="status status-success">✓</span></td>
+                            <td><span class="stars">★★★★☆</span></td>
+                            <td><span class="status status-success">96.5%</span></td>
+                            <td>2-4周</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FineBI</strong></td>
+                            <td>企业级对话式BI（市占第一）</td>
+                            <td><span class="status status-success">✓</span></td>
+                            <td><span class="stars">★★★★☆</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td>2-4周</td>
+                        </tr>
+                        <tr>
+                            <td><strong>用友YonData</strong></td>
+                            <td>企业级数智化平台ChatBI</td>
+                            <td><span class="status status-success">✓</span></td>
+                            <td><span class="stars">★★★★☆</span></td>
+                            <td><span class="stars">★★★★☆</span></td>
+                            <td>4-8周</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DataFocus</strong></td>
+                            <td>搜索式对话BI</td>
+                            <td><span class="status status-success">✓</span></td>
+                            <td><span class="stars">★★★☆☆</span></td>
+                            <td><span class="status status-success">~100%</span></td>
+                            <td>1-3周</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box success">
+                <strong>推荐排序：</strong>
+                <ol style="margin-top: 8px;">
+                    <li><strong>恒生WarrenQ</strong> - 金融垂直专业，基金/证券机构共建</li>
+                    <li><strong>Aloudata Agent</strong> - 100%准确SQL，消除数据幻觉</li>
+                    <li><strong>Quick BI / FineBI</strong> - 准确率高，性价比好</li>
+                    <li><strong>用友YonData</strong> - 适合已有NC Cloud的客户</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Tab 2: Aloudata深度分析 -->
+        <div id="tab-aloudata" class="tab-content">
+            <h3 class="subsection-title">Aloudata Agent 技术优势</h3>
+            <p>采用"NoETL 明细语义层 + 多 Agent 协同"架构，与传统NL2SQL路径不同：</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>技术路径</th>
+                            <th>工作方式</th>
+                            <th>优点</th>
+                            <th>缺点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>NL2SQL</strong></td>
+                            <td>大模型直接生成SQL</td>
+                            <td>简单直接</td>
+                            <td>易产生"数据幻觉"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NL2DSL2SQL</strong></td>
+                            <td>大模型→DSL→SQL</td>
+                            <td>可控性增强</td>
+                            <td>仍依赖大模型生成中间语言</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>NL2MQL2SQL ⭐</strong></td>
+                            <td>大模型理解→MQL→指标引擎生成SQL</td>
+                            <td><strong>100%准确SQL、无幻觉</strong></td>
+                            <td>需要建设指标语义层</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">落地案例：中交一公局</h3>
+            <div class="info-box success">
+                <ul>
+                    <li>自助完成<strong>80%</strong>数据查询需求</li>
+                    <li>关键决策响应速度提升<strong>90%</strong></li>
+                    <li>跨部门沟通成本降低<strong>30%</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab 3: 优势能力借鉴 -->
+        <div id="tab-benchmark" class="tab-content">
+            <h3 class="subsection-title">采购产品优势能力借鉴</h3>
+            <p>虽然选择自研方案，但采购产品的成熟经验值得借鉴吸收：</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>产品</th>
+                            <th>核心优势能力</th>
+                            <th>自研可借鉴</th>
+                            <th>优先级</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>恒生WarrenQ</strong></td>
+                            <td>金融术语词典（收益率、回撤、夏普比等）、多源融合</td>
+                            <td>建立金融术语→字段映射词典、DB+文档+API多源融合查询</td>
+                            <td><span class="stars">★★★★★</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Aloudata</strong></td>
+                            <td>NL2MQL2SQL，100%准确SQL</td>
+                            <td>引入语义中间层（MQL/DSL）、大模型只做"意图理解"</td>
+                            <td><span class="stars">★★★★★</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quick BI</strong></td>
+                            <td>智能建模、SQL自校正</td>
+                            <td>元数据自动发现与关系推断、生成SQL后执行验证+自动修正</td>
+                            <td><span class="stars">★★★★☆</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FineBI</strong></td>
+                            <td>预定义表关联、权限控制</td>
+                            <td>预定义常用表关联关系、热门查询结果缓存</td>
+                            <td><span class="stars">★★★★☆</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box info">
+                <strong>💡 自研方案的"最佳实践融合"策略：</strong>
+                <ol style="margin-top: 8px;">
+                    <li><strong>语义中间层</strong>（借鉴Aloudata）：大模型→意图理解→MQL/DSL→SQL引擎，分离理解与生成</li>
+                    <li><strong>金融知识增强</strong>（借鉴WarrenQ）：建立金融术语词典、指标计算逻辑库、行业Few-shot模板</li>
+                    <li><strong>自校正机制</strong>（借鉴Quick BI）：SQL执行前语法校验，执行后结果校验，异常时自动修正</li>
+                    <li><strong>预定义模型</strong>（借鉴FineBI）：核心业务表预建关联关系，减少复杂Join的错误率</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Tab 4: 用友分析 -->
+        <div id="tab-yonyou" class="tab-content">
+            <h3 class="subsection-title">用友YonData ChatBI 评估</h3>
+            
+            <div class="comparison-grid">
+                <div class="correct-path">
+                    <div class="path-title">✅ 优势</div>
+                    <ul>
+                        <li>YonGPT 2.0百亿模型易私有化</li>
+                        <li>财务/人力/供应链领域知识增强</li>
+                        <li>与NC Cloud深度集成</li>
+                        <li>企业级数据治理成熟</li>
+                    </ul>
+                </div>
+                <div class="wrong-path">
+                    <div class="path-title">⚠️ 劣势</div>
+                    <ul>
+                        <li>金融垂直能力一般</li>
+                        <li>收益率、夏普比等金融指标需定制</li>
+                        <li>部署周期较长（4-8周）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box warning">
+                <strong>结论：</strong>
+                <p style="margin-top: 8px;">如果公司已是用友NC Cloud客户，可考虑作为补充方案；否则建议优先选择金融垂直产品（恒生、Aloudata）</p>
+            </div>
+        </div>
+    </div>
+</section>

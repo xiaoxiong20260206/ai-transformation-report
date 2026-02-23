@@ -1,0 +1,377 @@
+<!-- 章节7-8: 准确性提升与评测体系（含4个Tab）+ CEO视角 + 幻方借鉴 -->
+
+<!-- 第7章：准确性提升与评测体系 -->
+<section class="section-card" id="accuracy">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-number">7</span>
+        <h2>🎯 准确性提升与评测体系</h2>
+        <span class="toggle">▼</span>
+    </div>
+    <div class="section-content">
+        <div class="tabs">
+            <div class="tab active" data-tab="tab-methods">提升方法</div>
+            <div class="tab" data-tab="tab-dataset">评测集准备</div>
+            <div class="tab" data-tab="tab-metrics">评估指标</div>
+            <div class="tab" data-tab="tab-diagnosis">问题诊断</div>
+        </div>
+
+        <!-- Tab 1: 提升方法 -->
+        <div id="tab-methods" class="tab-content active">
+            <h3 class="subsection-title">准确性提升方法</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>方法</th>
+                            <th>具体措施</th>
+                            <th>预期提升</th>
+                            <th>实施难度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>元数据治理</strong></td>
+                            <td>完善表/字段描述、添加业务含义注释</td>
+                            <td><span class="status status-success">+15-20%</span></td>
+                            <td><span class="status status-info">低</span></td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>业务术语词典</strong></td>
+                            <td>建立"净值"→nav等映射</td>
+                            <td><span class="status status-success">+10-15%</span></td>
+                            <td><span class="status status-info">低</span></td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>Few-shot示例库</strong></td>
+                            <td>积累常见问题的SQL模板</td>
+                            <td><span class="status status-success">+10-15%</span></td>
+                            <td><span class="status status-warning">中</span></td>
+                        </tr>
+                        <tr>
+                            <td>自校正迭代</td>
+                            <td>生成SQL后执行验证，错误时自动修正</td>
+                            <td><span class="status status-info">+5-10%</span></td>
+                            <td><span class="status status-warning">中</span></td>
+                        </tr>
+                        <tr>
+                            <td>多模型交叉验证</td>
+                            <td>多模型投票</td>
+                            <td><span class="status status-info">+10%</span></td>
+                            <td><span class="status status-danger">高</span></td>
+                        </tr>
+                        <tr>
+                            <td>人工审核兜底</td>
+                            <td>关键查询增加人工确认</td>
+                            <td>兜底</td>
+                            <td><span class="status status-info">低</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box success">
+                <strong>Quick Wins（快速见效）：</strong>
+                <p style="margin-top: 8px;">元数据治理 + 业务术语词典 + Few-shot示例库</p>
+            </div>
+        </div>
+
+        <!-- Tab 2: 评测集准备 -->
+        <div id="tab-dataset" class="tab-content">
+            <h3 class="subsection-title">评测集准备方法</h3>
+            <div class="info-box info">
+                <strong>是否需要覆盖所有用户场景？</strong>
+                <p style="margin-top: 8px;">不需要100%覆盖，但需要"核心场景全覆盖 + 边缘场景抽样"</p>
+            </div>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>场景类型</th>
+                            <th>覆盖策略</th>
+                            <th>数量建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>核心高频场景</strong></td>
+                            <td>100%覆盖</td>
+                            <td>50-100条</td>
+                        </tr>
+                        <tr>
+                            <td>中频场景</td>
+                            <td>80%覆盖</td>
+                            <td>100-200条</td>
+                        </tr>
+                        <tr>
+                            <td>低频/边缘场景</td>
+                            <td>抽样覆盖</td>
+                            <td>50-100条</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>已知Bad Case</strong></td>
+                            <td>100%纳入</td>
+                            <td>持续积累</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">评测集构建步骤</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>1. 场景梳理</h4>
+                    <p>与业务方访谈，收集高频查询场景 → 产出场景清单（50-100个）</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2. Query收集</h4>
+                    <p>收集真实用户Query + 人工构造变体 → 原始Query库（300-500条）</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>3. SQL标注</h4>
+                    <p>人工编写正确SQL，执行验证结果 → 标注数据集</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>4. 难度标注</h4>
+                    <p>按复杂度分级：单表/多表Join/子查询/聚合 → 分层评测集</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>5. 持续补充</h4>
+                    <p>线上Bad Case自动入库 → 持续增长的评测集</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: 评估指标 -->
+        <div id="tab-metrics" class="tab-content">
+            <h3 class="subsection-title">端到端指标（整体效果）</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>指标</th>
+                            <th>定义</th>
+                            <th>目标</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>执行准确率（EX）</strong></td>
+                            <td>SQL可执行且结果正确的比例</td>
+                            <td><span class="status status-success">>90%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>执行成功率（ES）</strong></td>
+                            <td>SQL语法正确可执行的比例</td>
+                            <td><span class="status status-success">>95%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>结果匹配率（RM）</strong></td>
+                            <td>结果与金标准一致的比例</td>
+                            <td><span class="status status-success">>92%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>响应时间P95</strong></td>
+                            <td>95%请求的响应时间</td>
+                            <td><span class="status status-info">&lt;3秒</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">组件级指标（定位问题环节）</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>组件</th>
+                            <th>指标</th>
+                            <th>如何测量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>意图识别</strong></td>
+                            <td>意图准确率</td>
+                            <td>人工标注意图对比</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Schema Linking</strong></td>
+                            <td>表/字段召回率、精确率</td>
+                            <td>对比金标准SQL涉及的表</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SQL生成</strong></td>
+                            <td>语法正确率、语义正确率</td>
+                            <td>数据库语法校验 + 逻辑对比</td>
+                        </tr>
+                        <tr>
+                            <td><strong>结果解释</strong></td>
+                            <td>解释准确率</td>
+                            <td>人工评估</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab 4: 问题诊断 -->
+        <div id="tab-diagnosis" class="tab-content">
+            <h3 class="subsection-title">问题定位决策树</h3>
+            <div class="code-block">执行准确率低？
+├── SQL执行失败率高？
+│   └── 检查：SQL语法生成质量
+├── SQL执行成功但结果错误？
+│   ├── Schema Linking召回率低？
+│   │   └── 问题：元数据不完善 / Schema Linking模块
+│   ├── Schema Linking正确但SQL语义错？
+│   │   └── 问题：SQL生成推理能力 / Few-shot示例
+│   └── SQL正确但结果解释错？
+│       └── 问题：结果解释模块
+└── 特定场景准确率低？
+    └── 检查：该场景的Few-shot覆盖 / 术语词典</div>
+
+            <h3 class="subsection-title">无用户权限下的问题排查流程</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>1. 根据request_id提取完整日志</h4>
+                    <p>记录完整的请求链路：意图识别→Schema Linking→SQL生成→执行结果</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2. 分析各阶段输出是否正确</h4>
+                    <p>Schema Linking输出的表/字段对吗？生成的SQL逻辑对吗？</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>3. 在沙箱环境用脱敏数据复现</h4>
+                    <p>构建测试数据库，模拟用户场景</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 第8章：CEO视角关键考量 -->
+<section class="section-card" id="ceo">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-number">8</span>
+        <h2>👔 CEO视角关键考量</h2>
+        <span class="toggle">▼</span>
+    </div>
+    <div class="section-content">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>CEO关心的问题</th>
+                        <th>核心关注</th>
+                        <th>建议回答</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ROI如何？</strong></td>
+                        <td>投入产出比</td>
+                        <td>数据查询Agent预计6-12个月回本</td>
+                    </tr>
+                    <tr>
+                        <td><strong>有什么风险？</strong></td>
+                        <td>合规、安全、声誉</td>
+                        <td>私有化部署+人工审核兜底</td>
+                    </tr>
+                    <tr>
+                        <td><strong>竞争对手在做什么？</strong></td>
+                        <td>行业位置</td>
+                        <td>头部基金已部署DeepSeek，需快速跟进</td>
+                    </tr>
+                    <tr>
+                        <td><strong>需要多少人和钱？</strong></td>
+                        <td>资源投入</td>
+                        <td>初期4-5人团队，200-500万投入</td>
+                    </tr>
+                    <tr>
+                        <td><strong>什么时候能见效？</strong></td>
+                        <td>时间预期</td>
+                        <td>采购2-4周，自研3-5个月</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-box success">
+            <strong>💰 投资回报测算</strong>
+            <ul style="margin-top: 8px;">
+                <li><strong>初期投入</strong>：人力成本约100-150万/年，算力50-100万</li>
+                <li><strong>效率提升</strong>：客户经理效率提升30-50%，相当于节省1-2个FTE</li>
+                <li><strong>预计回本周期</strong>：6-12个月</li>
+            </ul>
+        </div>
+
+        <h3 class="subsection-title">⚖️ 合规与监管</h3>
+        <ul>
+            <li>证监会对AI应用的监管态度</li>
+            <li>客户数据保护（个人信息保护法）</li>
+            <li>AI决策的可解释性要求</li>
+        </ul>
+
+        <h3 class="subsection-title">⚠️ 风险管理</h3>
+        <ul>
+            <li>AI幻觉风险（DeepSeek-R1约14.3%）</li>
+            <li>数据泄露风险</li>
+            <li>模型偏差风险</li>
+        </ul>
+    </div>
+</section>
+
+<!-- 幻方量化AI布局借鉴 -->
+<section class="section-card" id="huanfang">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-number">🏆</span>
+        <h2>幻方量化AI布局借鉴</h2>
+        <span class="toggle">▼</span>
+    </div>
+    <div class="section-content">
+        <div class="info-box info">
+            <strong>幻方量化是中国量化AI应用最成功的案例之一</strong>
+            <p style="margin-top: 8px;">从2016年开始全面采用深度学习进行投资决策，是国内最早的"AI原生"量化基金。2025年收益56.55%位列百亿量化第二，孵化出震动全球AI界的DeepSeek大模型。</p>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>借鉴维度</th>
+                        <th>幻方做法</th>
+                        <th>我们的应用</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AI全链路覆盖</strong></td>
+                        <td>从因子挖掘、策略生成到交易执行全AI化</td>
+                        <td>金融数字员工覆盖数据查询→研报分析→风险监控全链路</td>
+                    </tr>
+                    <tr>
+                        <td><strong>多Agent协作</strong></td>
+                        <td>Alpha挖掘Agent + 交易执行Agent + 监测Agent协同工作</td>
+                        <td>Data Agent + Research Agent + Risk Agent统一架构</td>
+                    </tr>
+                    <tr>
+                        <td><strong>技术栈自主可控</strong></td>
+                        <td>深度学习+强化学习，与DeepSeek同源技术积累</td>
+                        <td>自研NL2SQL + 模型可切换能力，沉淀核心技术</td>
+                    </tr>
+                    <tr>
+                        <td><strong>场景聚焦</strong></td>
+                        <td>AI能力高度集中于量化交易这一核心场景，不分散</td>
+                        <td>先聚焦数据查询这一高ROI场景，验证后再扩展</td>
+                    </tr>
+                    <tr>
+                        <td><strong>持续迭代</strong></td>
+                        <td>模型持续训练，策略长期学习市场模式</td>
+                        <td>评测→优化→精调的持续提升闭环</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

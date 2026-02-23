@@ -1,0 +1,401 @@
+<!-- 章节6: 自研技术方案（含5个Tab） -->
+
+<section class="section-card" id="selfdev">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-number">6</span>
+        <h2>🛠️ 自研技术方案</h2>
+        <span class="toggle">▼</span>
+    </div>
+    <div class="section-content">
+        <div class="tabs">
+            <div class="tab active" data-tab="tab-models">基础模型选择</div>
+            <div class="tab" data-tab="tab-architecture">技术架构</div>
+            <div class="tab" data-tab="tab-current">现状架构分析</div>
+            <div class="tab" data-tab="tab-ideal">理想架构</div>
+            <div class="tab" data-tab="tab-timeline">开发周期</div>
+        </div>
+
+        <!-- Tab 1: 基础模型选择 -->
+        <div id="tab-models" class="tab-content active">
+            <h3 class="subsection-title">2026年推荐基础模型对比</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>模型</th>
+                            <th>总参数</th>
+                            <th>激活参数</th>
+                            <th>代码/NL2SQL</th>
+                            <th>Agent能力</th>
+                            <th>开源</th>
+                            <th>私有化成本</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>DeepSeek R2</strong></td>
+                            <td>1万亿+</td>
+                            <td>370亿</td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="status status-success">完全开源</span></td>
+                            <td>低</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>Qwen3</strong></td>
+                            <td>720B</td>
+                            <td>52B</td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="status status-success">完全开源</span></td>
+                            <td>低</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MiniMax M2.1</strong></td>
+                            <td>230B</td>
+                            <td>10B</td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="status status-success">开源</span></td>
+                            <td>低</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GLM-5</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><span class="stars">★★★★★</span></td>
+                            <td><span class="stars">★★★★☆</span></td>
+                            <td><span class="status status-success">开源</span></td>
+                            <td>中</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box success">
+                <strong>推荐策略：</strong>
+                <ul style="margin-top: 8px;">
+                    <li><strong>算力充足（8×A100）</strong>：DeepSeek R2 或 Qwen3</li>
+                    <li><strong>算力有限（4×A100）</strong>：Qwen3-32B 或 GLM-5</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab 2: 技术架构 -->
+        <div id="tab-architecture" class="tab-content">
+            <h3 class="subsection-title">数据查询Agent架构</h3>
+            <div class="svg-container">
+                <svg viewBox="0 0 800 380" style="width: 100%; max-width: 800px;">
+                    <!-- Layer 1: 用户交互层 -->
+                    <rect x="30" y="20" width="740" height="60" rx="10" fill="#1e3050" stroke="#3b82f6" stroke-width="2"/>
+                    <text x="400" y="45" text-anchor="middle" fill="#93c5fd" font-size="14" font-weight="bold">👤 用户交互层</text>
+                    <text x="150" y="62" text-anchor="middle" fill="#f5f5f7" font-size="10">💬 自然语言输入</text>
+                    <text x="300" y="62" text-anchor="middle" fill="#f5f5f7" font-size="10">🎯 意图识别</text>
+                    <text x="450" y="62" text-anchor="middle" fill="#f5f5f7" font-size="10">🔄 多轮对话管理</text>
+                    <text x="620" y="62" text-anchor="middle" fill="#f5f5f7" font-size="10">📊 可视化结果展示</text>
+                    
+                    <line x1="400" y1="85" x2="400" y2="105" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Layer 2: NL2SQL核心层 -->
+                    <rect x="30" y="110" width="740" height="60" rx="10" fill="#1a3530" stroke="#059669" stroke-width="2"/>
+                    <text x="400" y="135" text-anchor="middle" fill="#86efac" font-size="14" font-weight="bold">🔧 NL2SQL核心层</text>
+                    <text x="130" y="152" text-anchor="middle" fill="#f5f5f7" font-size="10">🔗 Schema Linking</text>
+                    <text x="290" y="152" text-anchor="middle" fill="#f5f5f7" font-size="10">🔍 数据库内容检索</text>
+                    <text x="470" y="152" text-anchor="middle" fill="#f5f5f7" font-size="10">🧠 大模型+提示工程</text>
+                    <text x="650" y="152" text-anchor="middle" fill="#f5f5f7" font-size="10">✅ SQL校验与自校正</text>
+                    
+                    <line x1="400" y1="175" x2="400" y2="195" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Layer 3: 知识增强层 -->
+                    <rect x="30" y="200" width="740" height="60" rx="10" fill="#3a3520" stroke="#d97706" stroke-width="2"/>
+                    <text x="400" y="225" text-anchor="middle" fill="#fcd34d" font-size="14" font-weight="bold">📚 知识增强层</text>
+                    <text x="200" y="242" text-anchor="middle" fill="#f5f5f7" font-size="10">📋 元数据管理</text>
+                    <text x="400" y="242" text-anchor="middle" fill="#f5f5f7" font-size="10">📈 金融指标库</text>
+                    <text x="600" y="242" text-anchor="middle" fill="#f5f5f7" font-size="10">📄 SQL模板库</text>
+                    
+                    <line x1="400" y1="265" x2="400" y2="285" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Layer 4: 基础设施层 -->
+                    <rect x="30" y="290" width="740" height="60" rx="10" fill="#252530" stroke="#6b7280" stroke-width="2"/>
+                    <text x="400" y="315" text-anchor="middle" fill="#f5f5f7" font-size="14" font-weight="bold">⚙️ 基础设施层</text>
+                    <text x="180" y="332" text-anchor="middle" fill="#f5f5f7" font-size="10">🧠 大模型服务（私有化）</text>
+                    <text x="400" y="332" text-anchor="middle" fill="#f5f5f7" font-size="10">🗄️ 向量数据库（知识检索）</text>
+                    <text x="620" y="332" text-anchor="middle" fill="#f5f5f7" font-size="10">📈 日志与监控（评测体系）</text>
+                </svg>
+            </div>
+
+            <h3 class="subsection-title">需要具备的关键能力</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>能力模块</th>
+                            <th>具体要求</th>
+                            <th>实现方式</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Schema Linking</strong></td>
+                            <td>将自然语言实体映射到数据库表/字段</td>
+                            <td>RSLSQL双向模式链接</td>
+                        </tr>
+                        <tr>
+                            <td><strong>金融语义理解</strong></td>
+                            <td>理解"收益率"、"回撤"等术语</td>
+                            <td>金融术语词典 + 指标计算逻辑库</td>
+                        </tr>
+                        <tr>
+                            <td><strong>多轮对话</strong></td>
+                            <td>支持追问、澄清、上下文继承</td>
+                            <td>对话状态管理</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SQL执行校验</strong></td>
+                            <td>生成的SQL语法正确、可执行</td>
+                            <td>执行引导解码、自校正迭代</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab 3: 现状架构分析 -->
+        <div id="tab-current" class="tab-content">
+            <h3 class="subsection-title">📊 数据查询Agent现状架构</h3>
+            <p>当前系统采用<strong>串行执行</strong>的流水线架构，依次执行以下6个步骤：</p>
+            
+            <div class="svg-container">
+                <svg viewBox="0 0 700 300" style="width: 100%; max-width: 700px;">
+                    <!-- 步骤流程 -->
+                    <rect x="50" y="30" width="600" height="40" rx="8" fill="#374151" stroke="#ef4444" stroke-width="2"/>
+                    <text x="350" y="55" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="bold">⚠️ 现状架构：串行流水线（存在问题）</text>
+                    
+                    <!-- Step 1 -->
+                    <rect x="50" y="90" width="90" height="50" rx="6" fill="#1a1f2e" stroke="#6b7280"/>
+                    <text x="95" y="112" text-anchor="middle" fill="#f5f5f7" font-size="9" font-weight="bold">Step 1</text>
+                    <text x="95" y="128" text-anchor="middle" fill="#a0a0a5" font-size="8">🔐 鉴权</text>
+                    
+                    <line x1="145" y1="115" x2="165" y2="115" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Step 2 -->
+                    <rect x="170" y="90" width="90" height="50" rx="6" fill="#1a1f2e" stroke="#6b7280"/>
+                    <text x="215" y="112" text-anchor="middle" fill="#f5f5f7" font-size="9" font-weight="bold">Step 2</text>
+                    <text x="215" y="128" text-anchor="middle" fill="#a0a0a5" font-size="8">🎯 意图分类</text>
+                    
+                    <line x1="265" y1="115" x2="285" y2="115" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Step 3 -->
+                    <rect x="290" y="90" width="90" height="50" rx="6" fill="#1a1f2e" stroke="#6b7280"/>
+                    <text x="335" y="112" text-anchor="middle" fill="#f5f5f7" font-size="9" font-weight="bold">Step 3</text>
+                    <text x="335" y="128" text-anchor="middle" fill="#a0a0a5" font-size="8">📝 意图明确</text>
+                    
+                    <line x1="385" y1="115" x2="405" y2="115" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Step 4 -->
+                    <rect x="410" y="90" width="90" height="50" rx="6" fill="#1a1f2e" stroke="#6b7280"/>
+                    <text x="455" y="112" text-anchor="middle" fill="#f5f5f7" font-size="9" font-weight="bold">Step 4</text>
+                    <text x="455" y="128" text-anchor="middle" fill="#a0a0a5" font-size="8">🔍 知识库检索</text>
+                    
+                    <line x1="505" y1="115" x2="525" y2="115" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Step 5 -->
+                    <rect x="530" y="90" width="90" height="50" rx="6" fill="#1a1f2e" stroke="#059669"/>
+                    <text x="575" y="112" text-anchor="middle" fill="#f5f5f7" font-size="9" font-weight="bold">Step 5</text>
+                    <text x="575" y="128" text-anchor="middle" fill="#86efac" font-size="8">⚡ SQL生成</text>
+                    
+                    <line x1="575" y1="145" x2="575" y2="165" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Step 6 -->
+                    <rect x="530" y="170" width="90" height="50" rx="6" fill="#1a1f2e" stroke="#3b82f6"/>
+                    <text x="575" y="192" text-anchor="middle" fill="#f5f5f7" font-size="9" font-weight="bold">Step 6</text>
+                    <text x="575" y="208" text-anchor="middle" fill="#93c5fd" font-size="8">📋 结论输出</text>
+                </svg>
+            </div>
+
+            <h3 class="subsection-title">🚨 现状架构存在的问题</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>问题类别</th>
+                            <th>现状问题</th>
+                            <th>影响</th>
+                            <th>改进建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>架构设计</strong></td>
+                            <td>串行流水线，任意环节阻塞导致整体失败</td>
+                            <td>系统脆弱，容错性差</td>
+                            <td>引入并行处理 + 异步回退机制</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SQL生成</strong></td>
+                            <td>大模型直接生成SQL，缺少语义中间层</td>
+                            <td>易产生"数据幻觉"，准确率低</td>
+                            <td>借鉴NL2MQL2SQL，引入语义中间层</td>
+                        </tr>
+                        <tr>
+                            <td><strong>意图理解</strong></td>
+                            <td>分类后直接明确意图，缺少置信度判断</td>
+                            <td>模糊意图无法请求用户澄清</td>
+                            <td>增加置信度评估，低置信度时主动澄清</td>
+                        </tr>
+                        <tr>
+                            <td><strong>校验机制</strong></td>
+                            <td>SQL生成后直接执行，无校验反馈</td>
+                            <td>语法错误、结果异常难以自动修复</td>
+                            <td>增加SQL语法校验 + 执行结果校验 + 自校正</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab 4: 理想架构 -->
+        <div id="tab-ideal" class="tab-content">
+            <h3 class="subsection-title">🎯 理想的数据查询Agent架构</h3>
+            <p>基于现状问题分析，设计<strong>语义中间层 + 多路径协作 + 自校正闭环</strong>的理想架构：</p>
+            
+            <div class="svg-container">
+                <svg viewBox="0 0 850 480" style="width: 100%; max-width: 850px;">
+                    <!-- 标题 -->
+                    <rect x="30" y="15" width="790" height="35" rx="8" fill="#1a3530" stroke="#059669" stroke-width="2"/>
+                    <text x="425" y="38" text-anchor="middle" fill="#86efac" font-size="13" font-weight="bold">✅ 理想架构：语义中间层 + 多路径协作 + 自校正闭环</text>
+                    
+                    <!-- Layer 1: 用户交互层 -->
+                    <rect x="30" y="60" width="790" height="55" rx="10" fill="#1e3050" stroke="#3b82f6" stroke-width="2"/>
+                    <text x="425" y="82" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="bold">🖥️ 用户交互层</text>
+                    <text x="130" y="100" text-anchor="middle" fill="#f5f5f7" font-size="9">💬 自然语言</text>
+                    <text x="280" y="100" text-anchor="middle" fill="#f5f5f7" font-size="9">🔐 统一鉴权</text>
+                    <text x="430" y="100" text-anchor="middle" fill="#f5f5f7" font-size="9">🔄 多轮对话</text>
+                    <text x="580" y="100" text-anchor="middle" fill="#f5f5f7" font-size="9">📊 结果可视化</text>
+                    <text x="720" y="100" text-anchor="middle" fill="#f5f5f7" font-size="9">❓ 主动澄清</text>
+                    
+                    <line x1="425" y1="120" x2="425" y2="140" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Layer 2: 意图理解层（增强版） -->
+                    <rect x="30" y="145" width="790" height="65" rx="10" fill="#3a2530" stroke="#ec4899" stroke-width="2"/>
+                    <text x="425" y="167" text-anchor="middle" fill="#f9a8d4" font-size="12" font-weight="bold">🧠 意图理解层（增强版）</text>
+                    <text x="180" y="188" text-anchor="middle" fill="#f5f5f7" font-size="9">🎯 意图分类 + 置信度</text>
+                    <text x="425" y="188" text-anchor="middle" fill="#f5f5f7" font-size="9">📝 槽位抽取（实体/条件）</text>
+                    <text x="670" y="188" text-anchor="middle" fill="#f5f5f7" font-size="9">🔗 金融术语→字段映射</text>
+                    <text x="425" y="202" text-anchor="middle" fill="#fcd34d" font-size="8">⚡ 置信度&lt;80% → 请求澄清</text>
+                    
+                    <line x1="425" y1="215" x2="425" y2="235" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Layer 3: 语义中间层（MQL/DSL）— 核心改进 -->
+                    <rect x="30" y="240" width="790" height="65" rx="10" fill="#1a3530" stroke="#059669" stroke-width="3"/>
+                    <text x="425" y="262" text-anchor="middle" fill="#86efac" font-size="12" font-weight="bold">🔮 语义中间层（MQL/DSL）— 核心改进</text>
+                    <text x="180" y="283" text-anchor="middle" fill="#f5f5f7" font-size="9">意图 → MQL（指标查询语言）</text>
+                    <text x="425" y="283" text-anchor="middle" fill="#f5f5f7" font-size="9">MQL → 指标引擎生成SQL</text>
+                    <text x="670" y="283" text-anchor="middle" fill="#f5f5f7" font-size="9">解耦"理解"与"生成"</text>
+                    <text x="425" y="297" text-anchor="middle" fill="#86efac" font-size="9" font-weight="bold">✅ 100%准确SQL</text>
+                    
+                    <line x1="425" y1="310" x2="425" y2="330" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Layer 4: 查询执行 + 校验层 -->
+                    <rect x="30" y="335" width="790" height="55" rx="10" fill="#3a3520" stroke="#d97706" stroke-width="2"/>
+                    <text x="425" y="357" text-anchor="middle" fill="#fcd34d" font-size="12" font-weight="bold">⚡ 查询执行 + 校验层</text>
+                    <text x="130" y="375" text-anchor="middle" fill="#f5f5f7" font-size="9">SQL执行（DB查询）</text>
+                    <text x="320" y="375" text-anchor="middle" fill="#f5f5f7" font-size="9">API调用（跨表数据）</text>
+                    <text x="500" y="375" text-anchor="middle" fill="#f5f5f7" font-size="9">结果校验</text>
+                    <text x="680" y="375" text-anchor="middle" fill="#fcd34d" font-size="9">🔄 自校正迭代</text>
+                    
+                    <line x1="425" y1="395" x2="425" y2="415" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Layer 5: 全链路观测层 -->
+                    <rect x="30" y="420" width="790" height="45" rx="10" fill="#252530" stroke="#6b7280" stroke-width="2"/>
+                    <text x="425" y="448" text-anchor="middle" fill="#f5f5f7" font-size="11">🔬 全链路观测层：分步骤评测 | 链路追踪 | 准确率监控 | A/B测试 | 持续优化</text>
+                </svg>
+            </div>
+
+            <h3 class="subsection-title">准确性提升方法汇总</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>提升方法</th>
+                            <th>具体措施</th>
+                            <th>预期提升</th>
+                            <th>优先级</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>语义中间层</strong></td>
+                            <td>NL→MQL→SQL引擎，大模型只做意图理解</td>
+                            <td><span class="status status-success">+20-30%</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>金融术语词典</strong></td>
+                            <td>建立"收益率→return_rate"等金融术语映射</td>
+                            <td><span class="status status-success">+10-15%</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>置信度+主动澄清</strong></td>
+                            <td>意图置信度&lt;80%时主动请求用户确认</td>
+                            <td><span class="status status-success">+10-15%</span></td>
+                            <td><span class="stars">★★★★★</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>自校正迭代</strong></td>
+                            <td>SQL执行后校验结果，异常时自动重新生成</td>
+                            <td><span class="status status-info">+5-10%</span></td>
+                            <td><span class="stars">★★★★☆</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fewshot模板库</strong></td>
+                            <td>积累常见问题的SQL模板，相似问题优先匹配</td>
+                            <td><span class="status status-success">+10-15%</span></td>
+                            <td><span class="stars">★★★★☆</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box info">
+                <strong>💡 实施建议优先级：</strong>
+                <ol style="margin-top: 8px;">
+                    <li><strong>Phase 1（立即）</strong>：金融术语词典 + 元数据增强 + Few-shot模板库</li>
+                    <li><strong>Phase 2（1-2月）</strong>：置信度评估 + 主动澄清机制 + 自校正迭代</li>
+                    <li><strong>Phase 3（3-6月）</strong>：语义中间层（MQL）建设 + 全链路观测</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Tab 5: 开发周期 -->
+        <div id="tab-timeline" class="tab-content">
+            <h3 class="subsection-title">开发周期（3-4人团队）</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>第1阶段：MVP（4-6周）</h4>
+                    <p>基础NL2SQL能力、单表查询、简单多表Join</p>
+                    <p style="color: var(--color-text-muted); font-size: 12px;">人员：2后端+1算法</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>第2阶段：增强（4-6周）</h4>
+                    <p>多轮对话、金融指标库、Few-shot优化</p>
+                    <p style="color: var(--color-text-muted); font-size: 12px;">人员：2后端+1算法+1产品</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>第3阶段：优化（4-6周）</h4>
+                    <p>准确率提升、性能优化、监控体系</p>
+                    <p style="color: var(--color-text-muted); font-size: 12px;">人员：2后端+1算法</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>第4阶段：上线（2-4周）</h4>
+                    <p>灰度发布、用户反馈收集、迭代优化</p>
+                    <p style="color: var(--color-text-muted); font-size: 12px;">人员：全员</p>
+                </div>
+            </div>
+            <div class="info-box info">
+                <strong>总计：14-22周（3.5-5.5个月），4人团队</strong>
+            </div>
+        </div>
+    </div>
+</section>
